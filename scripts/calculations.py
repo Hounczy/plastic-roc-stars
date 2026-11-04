@@ -17,12 +17,15 @@ def calc_rmse(model, validation, data:pd.DataFrame, features:list, y:list) -> fl
         )
     return round(-scores.mean(),3)
 
-def feature_selection(data:pd.DataFrame, model, validation, features:list, y:list):
+def feature_selection(model, validation, data:pd.DataFrame, features:list, y:list):
     """
     Calculates the best features by minimising RMSE
     """
+    def evaluate(feature_subset):
+        return calc_rmse(model,validation,data,feature_subset,y)
+    
     selected_features = list(features)
-    full_rmse = calc_rmse(model,validation,data,features,y)
+    full_rmse = evaluate(selected_features)
 
     results = [{
     "n_features": len(selected_features),
@@ -41,7 +44,7 @@ def feature_selection(data:pd.DataFrame, model, validation, features:list, y:lis
 
             candidates.append({
                 "n_features": len(remaining),
-                "rmse": calc_rmse(model,validation,data,remaining,y),
+                "rmse": evaluate(remaining),
                 "features": remaining
             })
 
