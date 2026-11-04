@@ -4,3 +4,4 @@ ProjectDescription2026_MachineLearning.pdf
 .vscode/
 .env
 __pycache__/
+data/ 
