@@ -15,7 +15,7 @@ def calc_rmse(model, validation, data:pd.DataFrame, features:list, y:list) -> fl
             cv=validation,
             scoring="neg_root_mean_squared_error"
         )
-    return round(-scores.mean(),3)
+    return -scores.mean()
 
 def feature_selection(model, validation, data:pd.DataFrame, features:list, y:list):
     """
@@ -61,4 +61,5 @@ def feature_selection(model, validation, data:pd.DataFrame, features:list, y:lis
         formatters={"features": lambda names: ", ".join(names)}
     )
 )
+    return results_df
 
